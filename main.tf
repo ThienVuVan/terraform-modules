@@ -1,9 +1,26 @@
-locals {
-  project = "terraform-practices"
+provider "aws" {
+  region = "us-east-1"
 }
 
-provider "aws" {
-  region = "us-west-2"
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+
+  backend "s3" {
+    bucket         = "s3-remote-backend"
+    key            = "global/s3/terraform.tfstate"
+    region         = "us-east-1"
+    dynamodb_table = "tfstate-locking"
+    encrypt        = true
+  }
+}
+
+locals {
+  project = "terraform-practices"
 }
 
 module "networking" {

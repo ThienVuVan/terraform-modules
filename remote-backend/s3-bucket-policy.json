@@ -1,0 +1,30 @@
+{
+    "Version": "2012-10-17",
+    "Id": "Policy1680820022117",
+    "Statement": [
+        {
+            "Sid": "Stmt1680819929502",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::<account>:user/USER"
+            },
+            "Action": [
+                "s3:DeleteObject",
+                "s3:GetObject",
+                "s3:ListBucket",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::S3-BUCKET-NAME",
+                "arn:aws:s3:::S3-BUCKET-NAME/global/s3/terraform.tfstate"
+            ]
+        },
+        {
+            "Sid": "Stmt1680819959950",
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:DeleteBucket",
+            "Resource": "arn:aws:s3:::S3-BUCKET-NAME"
+        }
+    ]
+}
